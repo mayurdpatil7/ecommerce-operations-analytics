@@ -1,0 +1,15 @@
+# Ignore dataset files
+*.csv
+
+# Ignore zip files
+*.zip
+
+# Ignore temporary files
+*.tmp
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
