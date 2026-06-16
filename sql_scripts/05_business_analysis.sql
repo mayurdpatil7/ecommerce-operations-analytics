@@ -2771,6 +2771,7 @@ ORDER BY volatility_rank;
 -- =========================================================
 -- SECTION 15: CUSTOMER SEGMENTATION ANALYSIS
 -- =========================================================
+
 -- =========================================================
 -- 15.1 RFM CUSTOMER SEGMENTATION ANALYSIS
 -- =========================================================
@@ -2778,97 +2779,71 @@ ORDER BY volatility_rank;
 -- Which customers are most valuable based on
 -- their recent activity, purchase frequency,
 -- and monetary contribution?
--- Why This Matters:
--- Helps businesses identify:
--- • Loyal customers
--- • High-value customers
--- • Potential churn-risk customers
--- • Customer purchasing behavior
--- • Marketing targeting opportunities
--- Business Use Cases:
--- • Customer retention strategy
--- • Personalized marketing campaigns
--- • VIP customer identification
--- • Churn prevention
--- • Revenue optimization
 -- =========================================================
 
-WITH customer_rfm_analysis AS (
+-- =========================================================
+-- SECTION 15: CUSTOMER SEGMENTATION ANALYSIS
+-- =========================================================
 
+-- 15.1 RFM Segment Summary
+WITH rfm_base AS (
     SELECT
         o.customer_id,
-
         MAX(DATE(o.order_purchase_timestamp)) AS last_purchase_date,
-
         DATEDIFF(
-            (
-                SELECT MAX(DATE(order_purchase_timestamp))
-                FROM orders
-            ),
+            (SELECT MAX(DATE(order_purchase_timestamp)) FROM orders),
             MAX(DATE(o.order_purchase_timestamp))
         ) AS recency_days,
-
         COUNT(DISTINCT o.order_id) AS frequency,
-
-        ROUND(
-            SUM(op.payment_value),
-            2
-        ) AS monetary_value
-
-    FROM orders AS o
-
-    INNER JOIN order_payments AS op
-        ON o.order_id = op.order_id
-
+        ROUND(SUM(op.payment_value), 2) AS monetary_value
+    FROM orders o
+    INNER JOIN order_payments op ON o.order_id = op.order_id
     WHERE o.order_status = 'delivered'
-
     GROUP BY o.customer_id
-
 ),
-
 rfm_scores AS (
-
     SELECT
         customer_id,
         recency_days,
         frequency,
         monetary_value,
-
-        NTILE(5) OVER (
-            ORDER BY recency_days DESC
-        ) AS recency_score,
-
-        NTILE(5) OVER (
-            ORDER BY frequency DESC
-        ) AS frequency_score,
-
-        NTILE(5) OVER (
-            ORDER BY monetary_value DESC
-        ) AS monetary_score
-
-    FROM customer_rfm_analysis
-
-)
-
-SELECT
-    customer_id,
-    recency_days,
-    frequency,
-    monetary_value,
-
-    recency_score,
-    frequency_score,
-    monetary_score,
-
-    CONCAT(
+        NTILE(5) OVER (ORDER BY recency_days ASC) AS recency_score,
+        NTILE(5) OVER (ORDER BY frequency DESC) AS frequency_score,
+        NTILE(5) OVER (ORDER BY monetary_value DESC) AS monetary_score
+    FROM rfm_base
+),
+rfm_segments AS (
+    SELECT
+        customer_id,
+        recency_days,
+        frequency,
+        monetary_value,
         recency_score,
         frequency_score,
-        monetary_score
-    ) AS rfm_segment
-
-FROM rfm_scores
-
-ORDER BY
-    monetary_score DESC,
-    frequency_score DESC,
-    recency_score DESC;
+        monetary_score,
+        CONCAT(recency_score, frequency_score, monetary_score) AS rfm_code,
+        CASE
+            WHEN recency_score >= 4
+             AND frequency_score >= 4
+             AND monetary_score >= 4 THEN 'Champions'
+            WHEN recency_score >= 3
+             AND frequency_score >= 3
+             AND monetary_score >= 3 THEN 'Loyal Customers'
+            WHEN recency_score >= 4
+             AND frequency_score <= 2 THEN 'At-Risk'
+            WHEN recency_score <= 2
+             AND frequency_score >= 3 THEN 'Hibernating'
+            ELSE 'Lost'
+        END AS rfm_segment
+    FROM rfm_scores
+)
+SELECT
+    rfm_segment,
+    COUNT(*) AS customer_count,
+    ROUND(COUNT(*) / SUM(COUNT(*)) OVER () * 100, 1) AS pct_of_customers,
+    ROUND(AVG(monetary_value), 2) AS avg_order_value,
+    ROUND(SUM(monetary_value), 2) AS total_revenue,
+    ROUND(SUM(monetary_value) / SUM(SUM(monetary_value)) OVER () * 100, 1) AS pct_of_revenue
+FROM rfm_segments
+GROUP BY rfm_segment
+ORDER BY total_revenue DESC;

@@ -1,144 +1,125 @@
-# 🛒 Olist Brazilian E-Commerce SQL Analysis
+# Olist Brazilian E-Commerce SQL Analysis
 
-## 📌 Project Overview
+End-to-end SQL analytics project analyzing 100,000+ orders across 8 relational 
+tables to answer one business question:
 
-This project analyzes the Brazilian E-commerce dataset provided by Olist using advanced SQL techniques. The objective of this project is to uncover business insights related to customer behavior, sales performance, delivery efficiency, payment patterns, and revenue trends.
+**Where is revenue at risk, and what should the business do about it?**
 
-The project demonstrates real-world data analytics workflow including:
+---
 
-- Data Cleaning
-- Data Validation
-- Exploratory Data Analysis
-- Advanced Business Analysis
-- Window Functions
-- Revenue Trend Analysis
-- Customer RFM Segmentation
+## Business Problem
 
-This project was built as an end-to-end SQL analytics portfolio project to simulate real business problem-solving scenarios used in the e-commerce industry.
+E-commerce platforms grow fast but lose customers silently. This project 
+identifies where Olist's revenue is concentrated, where customers are churning, 
+what is driving bad reviews, and which operational problems have the highest 
+business impact — using only SQL against raw transactional data.
 
+---
 
-## 🛠️ Tech Stack
+## Dataset
 
-- MySQL Workbench
-- SQL
-- CSV Dataset Files
-- Git & GitHub
+Source: Kaggle — Olist Brazilian E-Commerce Public Dataset  
+100,000+ orders | 8 relational tables | 2016–2018  
+MySQL 8.0 | InnoDB
 
+Dataset download: https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
-## 📂 Dataset
+---
 
-The dataset used in this project is the Olist Brazilian E-commerce dataset available on Kaggle.
+## Key Findings
 
-It contains real-world e-commerce data including:
+**35.2% of the customer base has gone silent — and they are recoverable.**  
+At-Risk customers represent 35.2% of all customers and 36.0% of total revenue. 
+These are buyers who previously purchased and stopped. A targeted win-back 
+campaign triggering at day 75 of inactivity has an estimated recoverable 
+revenue of R$ 849,308 — the single highest-ROI retention action available.
 
-- Customers
-- Orders
-- Order Items
-- Payments
-- Products
-- Reviews
-- Sellers
-- Geolocation Data
+**Delivery delay is the only variable with a direct, measurable impact on 
+review scores.**  
+On-time orders average 4.29/5.0. Orders delayed 5+ days average 1.70/5.0 — 
+a 2.59-point drop driven entirely by operational failure, not product quality. 
+Northeast states show 2.1x higher late delivery rates than São Paulo. Lifting 
+on-time delivery from 91.9% to 95% is estimated to raise the platform rating 
+from 4.16 to 4.36.
 
-Due to dataset size limitations, raw CSV files are not uploaded to this repository.
+**Revenue is dangerously concentrated at the seller level.**  
+The top 10% of sellers generate 66.8% of total platform revenue. Losing a 
+small number of top sellers creates outsized business risk — a dependency 
+that is invisible without seller-level revenue analysis.
 
-Dataset download link is provided inside:
+**The top revenue category is also the biggest satisfaction liability.**  
+beleza_saude is the highest revenue category at R$ 1,446,622 and 9.1% of 
+total revenue — but carries a below-average review score. Cross-referencing 
+revenue and review data reveals a compound risk not visible in either metric 
+alone.
 
-raw_data/README.txt
+---
 
+## Analytical Approach
 
+Six scripts built in dependency order — database creation, table setup, data 
+loading, cleaning and validation, business analysis, and index optimization.
 
-## 📂 Project Structure
+Data quality was validated before any analysis: duplicate checks, null 
+handling on critical columns, referential integrity across all 8 tables, 
+and order status distribution confirmed.
 
-```bash
-Project1_Olist/
-│
-├── raw_data/
-│   └── README.txt
-│
-├── sql_scripts/
-│   ├── 01_create_database.sql
-│   ├── 02_create_tables.sql
-│   ├── 03_data_loading.sql
-│   ├── 04_data_cleaning_validation.sql
-│   ├── 05_business_analysis.sql
-│   └── 06_indexes_optimization.sql
-│
-├── notes/
-│   └── business_observations.md
-│
-├── insights.md
-├── README.md
-```
+Business analysis implemented across five dimensions: revenue trends, delivery 
+performance, payment behavior, product and category analysis, and regional 
+distribution — each producing specific, quantified findings.
 
-## 🔗 Data Source
+RFM segmentation classified 94,983 customers into five behavioral tiers — 
+Champions, Loyal, At-Risk, Hibernating, and Lost — with segment-specific 
+retention recommendations and estimated revenue impact per action.
 
-Dataset: Olist Brazilian E-Commerce Public Dataset
+Cross-dimensional analysis connected delivery delay directly to review scores, 
+revenue concentration to seller dependency risk, and geographic revenue 
+distribution to logistics infrastructure gaps — producing findings that no 
+single-dimension analysis would reveal.
 
-Source:
-https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
+---
 
-## ▶️ Project Execution Flow
+## Key Business Recommendations
 
-1. Create database
-2. Create tables
-3. Load CSV datasets
-4. Perform data cleaning
-5. Validate data quality
-6. Execute business analysis queries
-7. Optimize query performance using indexes
-8. Generate business insights and observations
+Five prioritized actions with estimated impact:
 
-## ⚙️ How to Run the Project
+Revenue recovery — trigger At-Risk win-back campaign at day 75 of inactivity, 
+estimated R$ 849,308 recoverable revenue across 33,476 customers.
 
-1. Download the dataset from the Kaggle link provided.
-2. Place all CSV files inside the `raw_data` folder.
-3. Open MySQL Workbench.
-4. Execute SQL scripts in sequence:
+Delivery SLA — enforce 4-day maximum delivery for Tier 1 cities, estimated 
+platform rating lift from 4.16 to 4.36.
 
-```sql
-01_create_database.sql
-02_create_tables.sql
-03_data_loading.sql
-04_data_cleaning_validation.sql
-05_business_analysis.sql
-06_indexes_optimization.sql
-```
+Seller quality — intervene on high-revenue, low-rating sellers in top 5 
+categories, estimated +8 to +12 platform NPS improvement.
 
-5. Review generated business insights and observations.
+Payment optimization — promote installment options for orders above R$ 200, 
+where installment buyers spend 105.2% more per order on average.
 
-## 📈 Key Business Problems Solved
+Geographic expansion — sequence Northeast logistics partnerships before 
+marketing expansion, targeting Fortaleza, Recife, and Salvador where purchasing 
+intent exceeds current supply.
 
-- Identified monthly revenue growth trends and seasonal fluctuations
-- Analyzed delayed delivery patterns across weekdays and regions
-- Evaluated payment behavior and dominant payment methods
-- Measured revenue contribution across different months
-- Performed month-over-month order growth analysis
-- Identified top-performing and low-performing revenue periods
-- Analyzed revenue volatility trends over time
-- Calculated average revenue per order
-- Applied RFM segmentation to identify high-value customers
-- Used window functions for ranking, running totals, and growth analysis
+---
 
-## 🌟 Project Highlights
+## SQL Concepts Demonstrated
 
-- Built an end-to-end SQL analytics workflow using real-world e-commerce data
-- Applied advanced SQL concepts including CTEs and window functions
-- Performed revenue, delivery, payment, and customer behavior analysis
-- Implemented RFM customer segmentation for business insight generation
-- Structured the project using modular SQL execution flow
-- Documented business observations and analytical findings professionally
-- Prepared the project for future Tableau dashboard integration
+CTEs for multi-step staged calculations, window functions for ranking and 
+running totals, RFM scoring using NTILE and composite segmentation logic, 
+multi-table JOINs across 8 relational tables, conditional aggregation, 
+NULLIF for divide-by-zero protection, index optimization for query performance, 
+and data cleaning with duplicate handling and null validation.
 
-## 🚀 Future Improvements
+---
 
-- Build interactive Tableau dashboard
-- Add cohort retention analysis
-- Perform customer churn analysis
-- Build SQL views for dashboard optimization
-- Automate reporting workflow
+## Insights
 
+See [insights.md](insights.md) for full findings, regional breakdowns, 
+RFM segment tables, and business recommendations with estimated impact figures.
 
+## Dashboard
 
+Interactive Tableau dashboard built on this analysis:  
+Live Dashboard - [https://public.tableau.com/app/profile/mayur.patil7608/viz/OlistE-CommercePerformanceCustomerAnalyticsDashboard/Dashboard1]
 
+TABLEAU_GITHUB_URL - [https://github.com/mayurdpatil7/olist-ecommerce-performance-dashboard]
 

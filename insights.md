@@ -10,7 +10,7 @@
 
 Three findings drive the entire business case in this dataset:
 
-1. **At-Risk customers are a hidden revenue time bomb.** 35.2% of the customer base has gone silent after previously buying — a win-back campaign targeting this segment is the single highest-ROI retention action available.
+1. **67.2% of the customer base is Hibernating or Lost.** The platform's active engaged customer base is far smaller than raw user counts suggest. An At-Risk win-back campaign targeting 18,430 customers at day 75 of inactivity is the single highest-ROI retention action available, with estimated recoverable revenue of R$ 440,795.
 2. **Delivery delay is the #1 controllable driver of bad reviews.** Orders delayed 5+ days score 2.6 points lower on average — a gap entirely within operational control.
 3. **Revenue is dangerously concentrated.** The top 10% of sellers generate 66.8% of total platform revenue, creating significant key-person risk at the seller level.
 
@@ -89,7 +89,7 @@ The top 5 product categories account for 39.2% of total platform revenue:
 | 1 | beleza_saude | R$ 1446622.08 | 9.1% | 4.14 |
 | 2 | relogios_presentes | R$ 1306761.40 | 8.2% | 4.02 |
 | 3 | cama_mesa_banho | R$ 1258189.51 | 7.9% | 3.90 |
-| 4 | esporte_lazer | R$ 1163329.98 | 7.3 | 4.11 |
+| 4 | esporte_lazer | R$ 1163329.98 | 7.3% | 4.11 |
 | 5 | informatica_acessorios | R$ 1068070.48 | 6.7% | 3.93 |
 
 A critical pattern: beleza_saude is the highest revenue category but has a below-average review score of  4.14/5.0. This means the platform's top revenue driver is also a customer satisfaction liability — a compound risk that is not visible without cross-referencing revenue and review data.
@@ -123,26 +123,45 @@ The Northeast states show lower order volumes but higher average order values in
 
 **What the data shows:**
 
-RFM (Recency, Frequency, Monetary) analysis segmented 94983 total customers into the following groups:
+RFM analysis segmented 96,477 delivered-order customers into five behavioral 
+tiers based on recency, frequency, and monetary scoring:
 
-| Segment | Customer Count | % of Customers | % of Revenue | Avg Order Value |
-|---|---|---|---|---|
-| At-Risk | 33476 | 35.2% | 36.0% | R$ 169.29 |
-| Lost | 33476 | 35.2% | 34.8% | R$ 163.45 |
-| Loyal Customers | 21789 | 22.9% | 21.6% | R$ 155.92 |
-| Hibernating | 4518 | 4.8% | 5.0% | R$ 173.49 |
-| Champions | 1724 | 1.8% | 2.6% | R$ 241.03 |
+| Segment | Customer Count | % of Customers | Avg Order Value | Total Revenue | % of Revenue |
+|---|---|---|---|---|---|
+| Hibernating | 35,887 | 37.2% | R$ 163.04 | R$ 5,851,045.41 | 37.9% |
+| Lost | 28,922 | 30.0% | R$ 196.74 | R$ 5,689,990.48 | 36.9% |
+| At-Risk | 18,430 | 19.1% | R$ 159.45 | R$ 2,938,637.73 | 19.1% |
+| Loyal Customers | 4,945 | 5.1% | R$ 97.76 | R$ 483,410.67 | 3.1% |
+| Champions | 8,293 | 8.6% | R$ 55.39 | R$ 459,377.48 | 3.0% |
 
-**The critical finding:** Champions represent only 1.8% of the customer base but generate 2.6% of total platform revenue. Losing even 10% of the Champion segment would cost the platform approximately R$ 41,193 in annual revenue.
+**The critical finding:** 67.2% of the entire customer base falls into 
+Hibernating or Lost segments — meaning the platform's active engaged customer 
+base is significantly smaller than total registered users suggest.
 
-At-Risk customers — those who were previously active but have not purchased in 90+ days — represent 35.2% of the customer base. These are the highest-value targets for a win-back campaign because they have demonstrated willingness to buy and already know the platform.
+At-Risk customers — 18,430 customers representing 19.1% of the base and 
+R$ 2,938,637.73 in revenue — are the highest priority win-back target. 
+These customers have demonstrated willingness to buy and already know the 
+platform. A re-engagement trigger at day 75 of inactivity is estimated to 
+recover 15% of this segment based on comparable platform benchmarks — 
+approximately R$ 440,795 in recoverable revenue.
 
-The most alarming finding: 40.0% of all customers fall into Hibernating or Lost segments, meaning the platform's active, engaged customer base is significantly smaller than the raw registered user count suggests.
+Champions (8,293 customers, 8.6%) show lower average order values than 
+other segments — a characteristic of this dataset where 97%+ of customers 
+place only one order, making frequency a weak discriminator. The Champions 
+classification here reflects customers who scored highest across all three 
+RFM dimensions simultaneously within the constraints of a single-purchase 
+dominated platform.
 
-**Recommendation (by segment):**
-- **Champions:** Protect with an early access / VIP loyalty programme. Do not discount — they buy at full price. Focus on retention, not conversion.
-- **At-Risk (33.5k customers):** Trigger a re-engagement email at exactly day 75 of inactivity (before they cross into Hibernating). A personalised offer with free delivery converts at 15% in comparable platforms. Estimated recoverable revenue: R$ 849308.
-- **Hibernating/Lost:** Low ROI to chase. Redirect that budget into acquisition and Champion retention.
+**Recommendation by segment:**
+- **Hibernating and Lost (67.2% of base):** Low ROI to chase individually. 
+  Redirect budget to acquisition and Champion retention instead.
+- **At-Risk (18,430 customers):** Trigger win-back email at day 75 of 
+  inactivity with a personalised free-delivery offer. Estimated recoverable 
+  revenue: R$ 440,795.
+- **Champions (8,293 customers):** Protect with early access and VIP 
+  treatment. Do not discount — focus on retention not conversion.
+- **Loyal Customers (4,945 customers):** Nurture toward Champion tier with 
+  loyalty rewards and personalised recommendations.
 
 ---
 
@@ -150,7 +169,7 @@ The most alarming finding: 40.0% of all customers fall into Hibernating or Lost 
 
 | Priority | Action | Target Metric | Estimated Impact |
 |---|---|---|---|
-| 1 | At-Risk segment win-back campaign (Day 75 trigger) | At-Risk customer reactivation | R$ 850072.81 recovered revenue |
+| 1 | At-Risk segment win-back campaign (Day 75 trigger) | At-Risk customer reactivation | R$ 440,795 estimated recoverable revenue |
 | 2 | Enforce 4-day SLA for Tier 1 cities | On-time delivery rate | Rating lift from 4.16 to 4.36 |
 | 3 | Seller quality intervention for high-revenue / low-rating sellers | Top-5 category avg rating | +8 to +12 platform NPS |
 | 4 | Promote installment payments for orders above R$200 | Average order value | +105.2% AOV uplift |
@@ -158,4 +177,5 @@ The most alarming finding: 40.0% of all customers fall into Hibernating or Lost 
 
 ---
 
-*Analysis conducted in MySQL using CTEs, window functions, and RFM scoring. All figures derived from the Olist public dataset (2016–2018). Visualised in Tableau — [dashboard link].*
+*Analysis conducted in MySQL & All figures derived from the Olist public dataset (2016–2018). Visualised in Tableau — [https://public.tableau.com/app/profile/mayur.patil7608/viz/OlistE-CommercePerformanceCustomerAnalyticsDashboard/Dashboard1].*
+
