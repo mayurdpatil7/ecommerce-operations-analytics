@@ -12,7 +12,7 @@ tables to answer one business question:
 E-commerce platforms grow fast but lose customers silently. This project 
 identifies where Olist's revenue is concentrated, where customers are churning, 
 what is driving bad reviews, and which operational problems have the highest 
-business impact — using only SQL against raw transactional data.
+business impact.
 
 ---
 
@@ -20,7 +20,6 @@ business impact — using only SQL against raw transactional data.
 
 Source: Kaggle — Olist Brazilian E-Commerce Public Dataset  
 100,000+ orders | 8 relational tables | 2016–2018  
-MySQL 8.0 | InnoDB
 
 Dataset download: https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
@@ -28,11 +27,11 @@ Dataset download: https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
 ## Key Findings
 
-**35.2% of the customer base has gone silent — and they are recoverable.**  
-At-Risk customers represent 35.2% of all customers and 36.0% of total revenue. 
-These are buyers who previously purchased and stopped. A targeted win-back 
-campaign triggering at day 75 of inactivity has an estimated recoverable 
-revenue of R$ 849,308 — the single highest-ROI retention action available.
+**67.2% of the customer base is Hibernating or Lost.**
+The platform's active engaged customer base is far smaller than raw user 
+counts suggest. An At-Risk win-back campaign targeting 18,430 customers 
+at day 75 of inactivity is the single highest-ROI retention action 
+available, with estimated recoverable revenue of R$ 440,795.
 
 **Delivery delay is the only variable with a direct, measurable impact on 
 review scores.**  
@@ -84,7 +83,7 @@ single-dimension analysis would reveal.
 Five prioritized actions with estimated impact:
 
 Revenue recovery — trigger At-Risk win-back campaign at day 75 of inactivity, 
-estimated R$ 849,308 recoverable revenue across 33,476 customers.
+estimated R$ 440,795 recoverable revenue across 18,430 customers.
 
 Delivery SLA — enforce 4-day maximum delivery for Tier 1 cities, estimated 
 platform rating lift from 4.16 to 4.36.
